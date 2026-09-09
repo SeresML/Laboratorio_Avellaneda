@@ -1,0 +1,122 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ------------------------------------------------------------------
+   Identidad visual — cambiá estos valores para ajustar la marca.
+   Los hex del sitio WordPress están en Elementor > Ajustes del sitio >
+   Colores globales. Pegalos acá y todo el sitio se actualiza.
+------------------------------------------------------------------- */
+:root {
+  --color-primary: #0f4c81; /* azul laboratorio: títulos, botones, links */
+  --color-primary-dark: #0a3660; /* hover y footer */
+  --color-accent: #1fa7b8; /* aqua: detalles, foco, subrayados */
+  --color-ink: #17212b; /* texto principal */
+  --color-muted: #55657a; /* texto secundario */
+  --color-surface: #f3f7fa; /* fondos suaves */
+  --color-line: #d9e3ec; /* bordes y divisores */
+  --color-whatsapp: #25d366;
+  --color-whatsapp-dark: #1ebe5b;
+
+  --font-sans: "Figtree Variable", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  @apply bg-white text-ink antialiased;
+  font-size: 1.0625rem; /* 17px: el público del laboratorio incluye muchos adultos mayores */
+  line-height: 1.6;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  @apply font-semibold text-primary;
+  letter-spacing: -0.015em;
+  line-height: 1.15;
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+/* Utilidades de layout */
+@layer components {
+  .container-site {
+    @apply mx-auto w-full max-w-6xl px-5 sm:px-8;
+  }
+
+  .section {
+    @apply py-14 sm:py-20;
+  }
+
+  .section-title {
+    @apply text-3xl sm:text-4xl;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-base font-semibold transition-colors;
+  }
+
+  .btn-primary {
+    @apply btn bg-primary text-white hover:bg-primary-dark;
+  }
+
+  .btn-outline {
+    @apply btn border-2 border-primary text-primary hover:bg-surface;
+  }
+
+  .btn-whatsapp {
+    @apply btn bg-whatsapp text-white hover:bg-whatsapp-dark;
+  }
+
+  .link-quiet {
+    @apply text-primary underline decoration-accent decoration-2 underline-offset-4 hover:text-primary-dark;
+  }
+
+  .skip-link {
+    @apply sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-md focus:bg-primary focus:px-4 focus:py-2 focus:text-white;
+  }
+}
+
+/* Acordeón de preguntas frecuentes (sin JavaScript) */
+details summary::-webkit-details-marker {
+  display: none;
+}
+
+details summary {
+  list-style: none;
+  cursor: pointer;
+}
+
+details .faq-icon {
+  transition: transform 180ms ease;
+}
+
+details[open] .faq-icon {
+  transform: rotate(45deg);
+}
