@@ -3,7 +3,7 @@ import Hero from "@/components/Hero";
 import ServicesGrid from "@/components/ServicesGrid";
 import ContactCards from "@/components/ContactCards";
 import Faq from "@/components/Faq";
-import { site } from "@/lib/site";
+import { site, home } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Servicios",
@@ -17,6 +17,7 @@ export default function ServiciosIndexPage() {
       <Hero
         title="Nuestros Servicios"
         subtitle="Resultados confiables, atención rápida y tecnología de avanzada para cuidar tu salud."
+        image={{ src: home.heroImage, alt: "Servicios de Laboratorio Avellaneda" }}
         compact
       />
 
