@@ -48,7 +48,14 @@ export async function POST(req: Request) {
   }
 
   const apiKey = process.env.RESEND_API_KEY;
-  const to = process.env.CONTACT_TO_EMAIL || site.email;
+  const toEnv = process.env.CONTACT_TO_EMAIL;
+  const defaultRecipients = ["gestionimpulsodigital@gmail.com", site.email];
+  const toList = toEnv
+    ? toEnv
+        .split(",")
+        .map((e) => e.trim())
+        .filter(Boolean)
+    : defaultRecipients;
   const from = process.env.CONTACT_FROM_EMAIL || "Laboratorio Avellaneda <onboarding@resend.dev>";
 
   const subject = `Nueva consulta web${context ? ` — ${context}` : ""}: ${nombre}`;
@@ -86,7 +93,7 @@ export async function POST(req: Request) {
       },
       body: JSON.stringify({
         from,
-        to: [to],
+        to: toList,
         reply_to: email,
         subject,
         text,

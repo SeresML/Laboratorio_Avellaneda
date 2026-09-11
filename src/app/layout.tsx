@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import "@fontsource-variable/figtree";
 import "./globals.css";
 
+import { GoogleTagManager, GoogleAnalytics } from "@next/third-parties/google";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
@@ -53,8 +54,13 @@ export const viewport: Viewport = {
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const gtmId = process.env.NEXT_PUBLIC_GTM_ID || "GTM-WNDW5VW";
+  const gaId = process.env.NEXT_PUBLIC_GA_ID;
+
   return (
     <html lang="es-AR">
+      {gtmId && <GoogleTagManager gtmId={gtmId} />}
+      {gaId && <GoogleAnalytics gaId={gaId} />}
       <body className="flex min-h-screen flex-col font-sans">
         <a href="#contenido" className="skip-link">
           Ir al contenido

@@ -34,14 +34,10 @@ npm run dev                  # http://localhost:3000
 
 ## Formulario "Escribinos"
 
-Envía los mensajes por mail usando [Resend](https://resend.com) (plan gratuito alcanza).
-Variables de entorno (en `.env.local` y en Vercel):
-
-| Variable | Descripción |
-|---|---|
-| `RESEND_API_KEY` | API key de Resend |
-| `CONTACT_TO_EMAIL` | Casilla que recibe las consultas |
-| `CONTACT_FROM_EMAIL` | Remitente. Hasta verificar el dominio en Resend usar `onboarding@resend.dev` |
+Envío directo mediante [FormSubmit](https://formsubmit.co) a `gestionimpulsodigital@gmail.com` con copia a `laboratorioavellaneda1221@gmail.com`.
+- **Activación:** Con el primer mensaje enviado, FormSubmit manda un mail de confirmación a la casilla con el botón **"Activate Form"**. Basta con hacer clic una sola vez para activarlo.
+- No requiere API keys de terceros ni configuración de servidores SMTP.
+- Incluye campo oculto anti-spam (honeypot) y disparo de evento `generate_lead` al dataLayer para GTM / GA4 / Google Ads.
 
 Si el formulario falla o no está configurado, el usuario ve un aviso con botón directo a WhatsApp: ninguna consulta se pierde.
 Incluye campo oculto anti-spam (honeypot).

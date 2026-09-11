@@ -21,24 +21,58 @@ export default function ContactForm({ title = "Escribinos", context, showMap = t
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const form = e.currentTarget;
-    const data = Object.fromEntries(new FormData(form).entries());
+    const formData = new FormData(form);
+
+    // Honeypot anti-spam
+    if (formData.get("website")) {
+      setStatus("sent");
+      return;
+    }
+
+    const data = Object.fromEntries(formData.entries());
 
     setStatus("sending");
     setError("");
 
     try {
-      const res = await fetch("/api/contact/", {
+      // Envío directo con FormSubmit (llega correo de activación "Activate Form" la primera vez)
+      const res = await fetch("https://formsubmit.co/ajax/gestionimpulsodigital@gmail.com", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...data, context }),
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          _subject: `[Laboratorio Avellaneda] Consulta web: ${data.nombre || "Paciente"}`,
+          _replyto: data.email,
+          _cc: "laboratorioavellaneda1221@gmail.com",
+          _template: "table",
+          _captcha: "false",
+          "Nombre y Apellido": data.nombre,
+          "Teléfono": data.telefono,
+          "Correo Electrónico": data.email,
+          "Consulta": data.mensaje,
+          ...(context ? { "Origen / Sección": context } : {}),
+        }),
       });
-      const json = (await res.json().catch(() => ({}))) as { ok?: boolean; error?: string };
 
-      if (!res.ok || !json.ok) {
-        throw new Error(json.error || "No pudimos enviar el mensaje.");
+      const json = await res.json().catch(() => ({}));
+
+      if (!res.ok) {
+        throw new Error(json.message || "No pudimos enviar el mensaje.");
       }
+
       form.reset();
       setStatus("sent");
+
+      if (typeof window !== "undefined") {
+        (window as any).dataLayer = (window as any).dataLayer || [];
+        (window as any).dataLayer.push({
+          event: "generate_lead",
+          form_name: "contacto",
+          context: context || "general",
+        });
+      }
     } catch (err) {
       setStatus("error");
       setError(err instanceof Error ? err.message : "No pudimos enviar el mensaje.");
