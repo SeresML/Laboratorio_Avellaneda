@@ -10,7 +10,8 @@ export const site = {
   description:
     "Laboratorio de análisis clínicos en Avellaneda desde 2007. Análisis clínicos, estudios de ADN, microbiología y virología, estudio prenatal no invasivo y extracción a domicilio. Trabajamos con PAMI y más de 200 obras sociales y prepagas.",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://analisisclinicos.com.ar",
-  email: "laboratorioavellaneda1221@gmail.com",
+  email: "contactolaboratorioavellaneda@gmail.com",
+  ccEmail: "gestionimpulsodigital@gmail.com",
   foundedYear: 2007,
   logo: "/images/logo.svg",
   address: {

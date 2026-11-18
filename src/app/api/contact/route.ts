@@ -48,15 +48,19 @@ export async function POST(req: Request) {
   }
 
   const apiKey = process.env.RESEND_API_KEY;
-  const toEnv = process.env.CONTACT_TO_EMAIL;
-  const defaultRecipients = ["gestionimpulsodigital@gmail.com", site.email];
+  const toEnv = process.env.CONTACT_TO_EMAIL || site.email;
   const toList = toEnv
-    ? toEnv
-        .split(",")
-        .map((e) => e.trim())
-        .filter(Boolean)
-    : defaultRecipients;
+    .split(",")
+    .map((s) => s.trim())
+    .filter(Boolean);
   const from = process.env.CONTACT_FROM_EMAIL || "Laboratorio Avellaneda <onboarding@resend.dev>";
+  const ccEnv = process.env.CONTACT_CC_EMAIL || site.ccEmail;
+  const ccList = ccEnv
+    ? ccEnv
+        .split(",")
+        .map((s) => s.trim())
+        .filter(Boolean)
+    : [];
 
   const subject = `Nueva consulta web${context ? ` — ${context}` : ""}: ${nombre}`;
   const text = [
@@ -85,12 +89,32 @@ export async function POST(req: Request) {
   }
 
   try {
+    const emailPayload: {
+      from: string;
+      to: string[];
+      reply_to: string;
+      subject: string;
+      text: string;
+      cc?: string[];
+    } = {
+      from,
+      to: toList,
+      reply_to: email,
+      subject,
+      text,
+    };
+
+    if (ccList.length > 0) {
+      emailPayload.cc = ccList;
+    }
+
     const res = await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${apiKey}`,
         "Content-Type": "application/json",
       },
+<<<<<<< HEAD
       body: JSON.stringify({
         from,
         to: toList,
@@ -98,6 +122,9 @@ export async function POST(req: Request) {
         subject,
         text,
       }),
+=======
+      body: JSON.stringify(emailPayload),
+>>>>>>> e207829 (Configurar destinatarios de formularios: principal a contactolaboratorioavellaneda y copia a gestionimpulsodigital)
     });
 
     if (!res.ok) {
