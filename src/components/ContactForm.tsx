@@ -36,7 +36,7 @@ export default function ContactForm({ title = "Escribinos", context, showMap = t
 
     try {
       // Envío directo con FormSubmit (llega correo de activación "Activate Form" la primera vez)
-      const res = await fetch("https://formsubmit.co/ajax/gestionimpulsodigital@gmail.com", {
+      const res = await fetch(`https://formsubmit.co/ajax/${site.email}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -45,7 +45,7 @@ export default function ContactForm({ title = "Escribinos", context, showMap = t
         body: JSON.stringify({
           _subject: `[Laboratorio Avellaneda] Consulta web: ${data.nombre || "Paciente"}`,
           _replyto: data.email,
-          _cc: "laboratorioavellaneda1221@gmail.com",
+          _cc: site.ccEmail,
           _template: "table",
           _captcha: "false",
           "Nombre y Apellido": data.nombre,

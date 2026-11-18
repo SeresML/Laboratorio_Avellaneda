@@ -114,17 +114,7 @@ export async function POST(req: Request) {
         Authorization: `Bearer ${apiKey}`,
         "Content-Type": "application/json",
       },
-<<<<<<< HEAD
-      body: JSON.stringify({
-        from,
-        to: toList,
-        reply_to: email,
-        subject,
-        text,
-      }),
-=======
       body: JSON.stringify(emailPayload),
->>>>>>> e207829 (Configurar destinatarios de formularios: principal a contactolaboratorioavellaneda y copia a gestionimpulsodigital)
     });
 
     if (!res.ok) {

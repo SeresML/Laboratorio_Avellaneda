@@ -34,7 +34,7 @@ npm run dev                  # http://localhost:3000
 
 ## Formulario "Escribinos"
 
-Envío directo mediante [FormSubmit](https://formsubmit.co) a `gestionimpulsodigital@gmail.com` con copia a `laboratorioavellaneda1221@gmail.com`.
+Envío directo mediante [FormSubmit](https://formsubmit.co) a `contactolaboratorioavellaneda@gmail.com` con copia a `gestionimpulsodigital@gmail.com`.
 - **Activación:** Con el primer mensaje enviado, FormSubmit manda un mail de confirmación a la casilla con el botón **"Activate Form"**. Basta con hacer clic una sola vez para activarlo.
 - No requiere API keys de terceros ni configuración de servidores SMTP.
 - Incluye campo oculto anti-spam (honeypot) y disparo de evento `generate_lead` al dataLayer para GTM / GA4 / Google Ads.
